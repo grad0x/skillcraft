@@ -51,9 +51,21 @@
 ## Visual Production Usefulness / 视觉制作可用性
 
 - [ ] 每张卡有可执行 visual direction / 视觉建议。
+- [ ] 每张卡有 Layout Brief / 版式说明、Visual Elements / 视觉元素和 Image Prompt / 生图提示词。
+- [ ] Negative Prompt / Avoid 排除了品牌仿冒、IP 模仿、低可读文字和无关装饰。
+- [ ] Text Readability Notes / 文字可读性提醒说明标题、正文、术语和小字如何排版。
 - [ ] 视觉建议服务信息结构，不只是装饰。
 - [ ] 对比、流程、检查清单等建议与卡片任务匹配。
 - [ ] 没有声称存在未提供的截图、图标或素材。
+- [ ] 输出没有声称已经生成图片文件。
+
+## Visual Motif Control / 视觉母题控制
+
+- [ ] Motif setting / 视觉母题设置明确：none、icon-only、mascot、character-pair 或 scene-character。
+- [ ] 角色或图标没有改变来源事实。
+- [ ] 角色没有压过标题、概念和证据边界。
+- [ ] 没有模仿现有 IP、品牌角色、动漫角色、游戏角色、名人或受版权保护 mascot。
+- [ ] 同一系列的角色外观保持一致。
 
 ## Anti-Slop Checks / 反 AI 味检查
 

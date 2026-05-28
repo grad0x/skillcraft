@@ -21,6 +21,7 @@
 - Card rhythm / 卡片节奏:
 - Title strategy / 标题策略:
 - Visual direction / 视觉方向:
+- Visual motif / 视觉母题:
 - CTA style / 行动引导:
 - Forbidden patterns / 禁用模式:
 
@@ -29,15 +30,25 @@
 ### Card 1: <标题>
 
 - 这张卡的任务:
-- 卡片正文:
-- Visual direction / 视觉建议:
+- Content copy / 内容文案:
+- Layout Brief / 版式说明:
+- Visual Elements / 视觉元素:
+- Image Prompt / 生图提示词:
+- Negative Prompt / Avoid:
+- Text Readability Notes / 文字可读性提醒:
+- Visual Motif Notes / 视觉母题说明:
 - Evidence note / 证据说明:
 
 ### Card 2: <标题>
 
 - 这张卡的任务:
-- 卡片正文:
-- Visual direction / 视觉建议:
+- Content copy / 内容文案:
+- Layout Brief / 版式说明:
+- Visual Elements / 视觉元素:
+- Image Prompt / 生图提示词:
+- Negative Prompt / Avoid:
+- Text Readability Notes / 文字可读性提醒:
+- Visual Motif Notes / 视觉母题说明:
 - Evidence note / 证据说明:
 
 ## Caption / 配文
@@ -61,4 +72,5 @@
 - Source fidelity / 来源保真:
 - Style fit / 风格匹配:
 - Platform fit / 平台适配:
+- Image brief usefulness / 图片生产简报可用性:
 - Anti-slop check / 反 AI 味检查:
