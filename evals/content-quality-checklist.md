@@ -1,42 +1,42 @@
 # Content Quality Checklist
 
-Use this checklist for artifacts produced by content-oriented skills such as `doc-to-card`.
+用于检查 `doc-to-card` 等内容型 Skill 产出的 artifact。目标是保证中文可读、来源可靠、结构可复用。
 
-## Source Integrity
+## 来源完整性 / Source Integrity
 
-- [ ] The artifact identifies the source or source type.
-- [ ] Source-backed claims are distinguishable from interpretation.
-- [ ] Important uncertainty is visible.
-- [ ] The artifact does not invent facts, dates, names, pricing, metrics, or product behavior.
-- [ ] Long copyrighted passages are not reproduced.
+- [ ] 产物标明来源或来源类型。
+- [ ] 来源事实和编辑解释被区分。
+- [ ] 重要不确定性可见。
+- [ ] 没有编造事实、日期、姓名、价格、指标或产品行为。
+- [ ] 没有大段复写受版权保护的原文。
 
-## Audience Fit
+## 读者匹配 / Audience Fit
 
-- [ ] The audience is explicit.
-- [ ] Technical terms are explained at the right level.
-- [ ] Chinese-facing copy sounds natural for the selected channel.
-- [ ] English technical terms remain accurate when no good Chinese translation exists.
-- [ ] The artifact avoids empty hype and generic AI advice.
+- [ ] 目标读者明确。
+- [ ] 技术术语解释到合适深度。
+- [ ] 面向中文渠道的文案自然、清楚、不油腻。
+- [ ] 没有合适中文翻译的英文技术词保持准确。
+- [ ] 避免空泛 hype 和 generic AI advice / 通用 AI 建议。
 
-## Structure
+## 结构 / Structure
 
-- [ ] The artifact has a clear beginning, middle, and end.
-- [ ] Each card, section, or module has one job.
-- [ ] The sequence teaches a concept, workflow, or decision path.
-- [ ] The output format matches the requested channel.
-- [ ] Visual or production notes are useful and not required for comprehension.
+- [ ] 产物有清楚的开始、展开和收束。
+- [ ] 每张卡、每个 section 或每个 module 只有一个任务。
+- [ ] 顺序能教会概念、workflow 或决策路径。
+- [ ] 输出格式匹配目标渠道。
+- [ ] 视觉或制作说明有帮助，但不替代正文。
 
-## Usefulness
+## 有用性 / Usefulness
 
-- [ ] The reader can take a concrete next action.
-- [ ] Examples are realistic.
-- [ ] Checklists or practice tasks are observable.
-- [ ] Limitations and common mistakes are included when relevant.
+- [ ] 读者能采取一个具体下一步。
+- [ ] 示例贴近真实工作。
+- [ ] Checklist、练习或任务可观察。
+- [ ] 相关限制和常见错误被说明。
 
-## Publication Readiness
+## 发布准备度 / Publication Readiness
 
-- [ ] The title or hook matches the actual content.
-- [ ] The caption or intro sets accurate expectations.
-- [ ] Calls to action are specific and not manipulative.
-- [ ] The artifact can be reviewed by another editor or agent.
-- [ ] Any required verification is listed before publishing.
+- [ ] 标题或 hook 与实际内容一致。
+- [ ] Caption 或 intro 准确设定预期。
+- [ ] Call to action 具体且不诱导。
+- [ ] 产物能被另一位编辑或 Agent 复核。
+- [ ] 发布前需要验证的信息已列出。

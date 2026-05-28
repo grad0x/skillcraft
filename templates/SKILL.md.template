@@ -1,6 +1,6 @@
 # SKILL.md Template
 
-Use this template when drafting a SkillCraft-compatible Agent Skill. Replace bracketed fields with concrete content before publishing.
+用于起草 SkillCraft 兼容的 Agent Skill。正文优先使用中文；`name` 和 `description` 保持英文，方便 Agent 识别和英文开发者理解。
 
 ````markdown
 ---
@@ -10,74 +10,91 @@ description: [State what the skill does and when to use it. Include concrete tri
 
 # [Readable Skill Title]
 
-## When To Use
+默认用中文输出，除非用户明确要求英文。保留必要英文技术词，并在第一次出现时给出中文解释。
 
-Use this skill when [specific user situation].
+## 什么时候使用 / When To Use
 
-Good fits:
+当用户需要 [具体任务场景] 时，使用这个 Skill。
 
-- [Concrete trigger 1]
-- [Concrete trigger 2]
-- [Concrete trigger 3]
+适合：
 
-Do not use this skill for [nearby but unsupported request].
+- [具体触发场景 1]
+- [具体触发场景 2]
+- [具体触发场景 3]
 
-## Inputs
+不适合：[相近但不支持的请求]。
 
-Ask for or infer these inputs:
+## 输入要求 / Inputs
 
-- [Input 1]
-- [Input 2]
-- [Input 3]
+从用户请求中提取或要求补充：
 
-If [critical input] is missing, ask for it before proceeding.
+- [输入 1]
+- [输入 2]
+- [输入 3]
 
-## Workflow
+如果 [关键输入] 缺失，先追问或标记为 assumption / 假设。
 
-1. [Action-oriented step]
-   - [Decision rule or detail]
-   - [Quality-preserving instruction]
+## 工作流程 / Workflow
 
-2. [Action-oriented step]
-   - [Decision rule or detail]
-   - [Quality-preserving instruction]
+1. [可执行步骤]
+   - [判断规则或上下文]
+   - [保持质量的约束]
 
-3. [Action-oriented step]
-   - [Decision rule or detail]
-   - [Quality-preserving instruction]
+2. [可执行步骤]
+   - [判断规则或上下文]
+   - [保持质量的约束]
 
-## Output Format
+3. [可执行步骤]
+   - [判断规则或上下文]
+   - [保持质量的约束]
 
-Return Markdown with this structure:
+## 输出格式 / Output Format
+
+按下面结构输出 Markdown：
 
 ```markdown
-## [Output Section]
+## [输出部分]
 
-- [Field]:
-- [Field]:
+- [字段]:
+- [字段]:
 
-## [Output Section]
+## [输出部分]
 
-<content>
+<内容>
 ```
 
-## Quality Checks
+## 质量检查 / Quality Checks
 
-- [Observable check]
-- [Observable check]
-- [Observable check]
+- [可观察检查项]
+- [可观察检查项]
+- [可观察检查项]
 
-## Failure Boundaries
+## 不适用场景 / Failure Boundaries
 
-- Do not [unsafe or unsupported behavior].
-- Do not [source, privacy, or policy violation].
-- Stop and ask for clarification if [condition].
+- 不要 [不安全或不支持的行为]。
+- 不要 [来源、隐私或政策违规]。
+- 如果 [条件]，停止并追问。
+
+## 示例输入 / Example Input
+
+```text
+[写一个真实用户会提出的请求。]
+```
+
+## 示例输出结构 / Example Output Structure
+
+```markdown
+## [产物标题]
+
+- [字段]:
+- [字段]:
+```
 ````
 
-## Authoring Notes
+## 作者提示 / Authoring Notes
 
-- Keep the skill body lean. Move detailed reference material into `references/` only when the skill truly needs it.
-- Write workflow steps as actions an agent can execute.
-- Make output formats checkable.
-- Include examples in a separate `examples/` document when the example is long.
-- Avoid "best prompt" language. Describe a repeatable skill workflow and how to validate it.
+- 让 Skill 描述 reusable workflow / 可复用工作流，不要只写 prompt template / 提示词模板。
+- output contract / 输出契约要稳定，可由另一个 Agent 或人类复核。
+- quality check / 质量检查必须可观察。
+- eval case / 评测用例至少覆盖 easy、normal、edge。
+- 只有当 references、assets 或 scripts 能减少重复劳动时才添加它们。

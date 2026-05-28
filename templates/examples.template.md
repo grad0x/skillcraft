@@ -1,60 +1,60 @@
 # Skill Example Template
 
-Use this file to document a realistic run of a skill. Examples should prove that the skill can produce a useful artifact from concrete inputs.
+用于记录一次真实 Skill 运行。Example 的作用是证明这个 Skill 能从具体输入产出可用 artifact，而不是展示理想化提示词。
 
-## Example Metadata
+## 示例元信息 / Example Metadata
 
 - Skill:
-- Example name:
-- Target user:
-- Channel or environment:
-- Source material:
-- Date run:
+- 示例名称:
+- 目标用户:
+- 渠道或环境:
+- 来源材料:
+- 运行日期:
 - Reviewer:
 
-## User Request
+## 用户请求 / User Request
 
 ```text
-[Write the request as a user would actually ask it.]
+[写成真实用户会提出的请求。]
 ```
 
-## Inputs Provided
+## 提供的输入 / Inputs Provided
 
-- Source:
-- Audience:
-- Constraints:
-- Desired output:
-- Known risks:
+- 来源:
+- 目标读者:
+- 约束:
+- 期望输出:
+- 已知风险:
 
-## Expected Skill Behavior
+## 预期 Skill 行为 / Expected Skill Behavior
 
-- The skill should:
-- The skill should not:
-- The skill should ask for clarification if:
+- Skill 应该:
+- Skill 不应该:
+- 缺少关键信息时应该:
 
-## Output Artifact
+## 输出产物 / Output Artifact
 
 ```markdown
-[Paste or summarize the output artifact.]
+[粘贴或概述输出产物。]
 ```
 
-## Review Notes
+## 复核记录 / Review Notes
 
-- What worked:
-- What was unclear:
-- What needed manual correction:
-- What should be added to the skill:
+- 有效的部分:
+- 不清楚的部分:
+- 需要人工修正的部分:
+- 应该回写到 Skill 的内容:
 
-## Reusable Learning
+## 可复用学习 / Reusable Learning
 
-- Add this pattern to the skill:
-- Add this eval case:
-- Add this failure boundary:
+- 添加到 Skill 的 pattern:
+- 添加的 eval case / 评测用例:
+- 添加的 failure boundary / 失败边界:
 
-## Filled Mini Example
+## 填写示例 / Filled Mini Example
 
 - Skill: `doc-to-card`
-- Example name: Turn a tool update note into a six-card 小红书 post.
-- Target user: Chinese AI creator teaching practical AI workflows.
-- Source material: User-provided release note excerpt.
-- Expected behavior: Preserve product facts, create one idea per card, mark unverified claims, and include a caption.
+- 示例名称: 把一段工具更新说明转成 6 张小红书卡片。
+- 目标用户: 用中文教学 AI 工作流的创作者。
+- 来源材料: 用户提供的 release note 摘录。
+- 预期行为: 保留产品事实、一张卡一个观点、标记未验证假设、输出中文 caption。

@@ -1,10 +1,10 @@
 # Example: Claude Code Doc To Card
 
-This example shows how to use `doc-to-card` when a user provides a Claude Code documentation excerpt or tutorial note and wants to turn it into a Chinese creator-facing card post.
+这个 example 展示如何使用 `doc-to-card`：当用户提供 Claude Code 文档摘录或教程笔记时，把它转成面向中文 AI 工具学习者的卡片内容。
 
-This file does not assume current Claude Code product details. Use only the source text supplied by the user or verified official documentation when running the example.
+本 example 不假设当前 Claude Code 产品细节。运行时只使用用户提供的来源文本，或经过验证的官方文档。
 
-## User Request
+## 用户请求 / User Request
 
 ```text
 Use the doc-to-card skill to turn this Claude Code documentation excerpt into a six-card 小红书 post for AI tool learners. Keep technical terms accurate, explain the workflow in Chinese, and mark any assumptions.
@@ -12,51 +12,51 @@ Use the doc-to-card skill to turn this Claude Code documentation excerpt into a 
 [Paste source excerpt here.]
 ```
 
-## Inputs
+## 输入 / Inputs
 
-- Source: user-provided Claude Code documentation excerpt.
-- Audience: Chinese AI tool learners who can read basic English technical terms.
-- Channel: 小红书 carousel.
-- Goal: help readers understand when to use the workflow and how to try it safely.
-- Constraints: six cards, Chinese copy, no unsupported claims, include source-backed notes.
+- 来源: 用户提供的 Claude Code 文档摘录。
+- 目标读者: 能阅读基础英文技术词的中文 AI 工具学习者。
+- 渠道: 小红书 carousel / 卡片。
+- 目标: 帮读者理解什么时候使用这个 workflow，以及如何安全尝试。
+- 约束: 6 张卡、中文正文、不编造 claim、包含 source-backed notes / 来源说明。
 
-## Expected Skill Behavior
+## 预期 Skill 行为 / Expected Skill Behavior
 
-The skill should:
+Skill 应该：
 
-- Identify the source contract before drafting.
-- Preserve product behavior exactly as described in the provided excerpt.
-- Convert dense documentation into a clear card sequence.
-- Use bilingual labels for important terms when useful.
-- Mark assumptions if the source excerpt does not include setup, pricing, model, or access details.
+- 先建立来源契约，再起草内容。
+- 精确保留来源中描述的产品行为。
+- 把密集文档拆成清楚卡片序列。
+- 必要时使用 bilingual labels / 双语标签。
+- 如果来源没有 setup、价格、模型、访问权限等信息，列为 assumptions / 假设。
 
-The skill should not:
+Skill 不应该：
 
-- Invent Claude Code features not present in the source.
-- Promise productivity gains without evidence.
-- Quote long passages from the documentation.
-- Hide uncertainty about current product behavior.
+- 编造来源中没有的 Claude Code 功能。
+- 没有证据地承诺效率提升。
+- 大段引用文档原文。
+- 隐藏当前产品行为的不确定性。
 
-## Suggested Card Architecture
+## 建议卡片结构 / Suggested Card Architecture
 
-1. What problem this workflow solves.
-2. What the tool or feature does, based only on the source.
-3. When to use it.
-4. How to try it step by step.
-5. Common mistakes or limits.
-6. Practice task and next action.
+1. 这个 workflow 解决什么问题。
+2. 这个工具或功能是什么，只基于来源说明。
+3. 什么时候适合使用。
+4. 如何一步步尝试。
+5. 常见错误或限制。
+6. 练习任务和下一步。
 
-## Review Checklist
+## 复核清单 / Review Checklist
 
-- Every card has one job.
-- Technical names remain accurate.
-- Chinese explanations are clear without oversimplifying.
-- Claims are traceable to the source excerpt.
-- Assumptions are listed separately from facts.
-- The final caption invites a concrete practice action.
+- 每张卡只有一个任务。
+- 技术名称准确。
+- 中文解释清楚，但不过度简化。
+- Claim 能追溯到来源摘录。
+- Assumptions 与 facts 分开。
+- Caption 邀请一个具体实践动作。
 
-## Example Evaluation Case
+## 示例评测用例 / Example Eval Case
 
-- Request: turn a 900-word tool documentation excerpt into a six-card 小红书 post.
-- Expected output: content brief, six card drafts, caption, source-backed claims, editorial assumptions, quality check.
-- Pass criteria: no invented product details, one idea per card, Chinese copy suitable for creators, and visible evidence notes.
+- 请求: 把一段 900 字工具文档摘录转成 6 张小红书卡片。
+- 预期输出: 内容简报、6 张卡片草稿、caption、source-backed claims、editorial assumptions、quality check。
+- 通过标准: 不编造产品细节，一张卡一个观点，中文适合创作者阅读，并且证据说明可见。
