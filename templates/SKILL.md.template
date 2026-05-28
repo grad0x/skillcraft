@@ -1,0 +1,83 @@
+# SKILL.md Template
+
+Use this template when drafting a SkillCraft-compatible Agent Skill. Replace bracketed fields with concrete content before publishing.
+
+````markdown
+---
+name: [lowercase-hyphen-name]
+description: [State what the skill does and when to use it. Include concrete trigger scenarios because this field is the primary discovery surface.]
+---
+
+# [Readable Skill Title]
+
+## When To Use
+
+Use this skill when [specific user situation].
+
+Good fits:
+
+- [Concrete trigger 1]
+- [Concrete trigger 2]
+- [Concrete trigger 3]
+
+Do not use this skill for [nearby but unsupported request].
+
+## Inputs
+
+Ask for or infer these inputs:
+
+- [Input 1]
+- [Input 2]
+- [Input 3]
+
+If [critical input] is missing, ask for it before proceeding.
+
+## Workflow
+
+1. [Action-oriented step]
+   - [Decision rule or detail]
+   - [Quality-preserving instruction]
+
+2. [Action-oriented step]
+   - [Decision rule or detail]
+   - [Quality-preserving instruction]
+
+3. [Action-oriented step]
+   - [Decision rule or detail]
+   - [Quality-preserving instruction]
+
+## Output Format
+
+Return Markdown with this structure:
+
+```markdown
+## [Output Section]
+
+- [Field]:
+- [Field]:
+
+## [Output Section]
+
+<content>
+```
+
+## Quality Checks
+
+- [Observable check]
+- [Observable check]
+- [Observable check]
+
+## Failure Boundaries
+
+- Do not [unsafe or unsupported behavior].
+- Do not [source, privacy, or policy violation].
+- Stop and ask for clarification if [condition].
+````
+
+## Authoring Notes
+
+- Keep the skill body lean. Move detailed reference material into `references/` only when the skill truly needs it.
+- Write workflow steps as actions an agent can execute.
+- Make output formats checkable.
+- Include examples in a separate `examples/` document when the example is long.
+- Avoid "best prompt" language. Describe a repeatable skill workflow and how to validate it.
