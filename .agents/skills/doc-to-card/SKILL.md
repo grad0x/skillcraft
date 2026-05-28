@@ -7,15 +7,30 @@ description: Convert source documents, articles, tutorials, notes, or tool docum
 
 默认用中文输出，除非用户明确要求英文。保留必要英文技术词，并在第一次出现时给出中文解释。目标用户包括中文 AI 创作者、技术内容作者、AI 工具学习者和 Skill 作者。
 
+核心原则：同一份来源材料可以生成不同风格的卡片产品，但来源事实和证据边界不能被风格改变。先做 Source Understanding Layer / 来源理解层，再做 Style Rendering Layer / 风格表达层。
+
+## 资源导航 / Resources
+
+按需读取这些资源，不要一次性把所有内容塞进输出：
+
+- `references/style-system.md`: 风格维度、初始 style presets / 风格预设、禁用表达。
+- `references/card-architectures.md`: 可复用 card sequence patterns / 卡片顺序模式。
+- `references/platform-profiles.md`: 小红书、公众号、LinkedIn carousel、内部 wiki、幻灯片的平台适配说明。
+- `templates/style-profile.template.md`: 让用户或 Agent 明确风格参数。
+- `templates/content-brief.template.md`: 来源理解层的结构化简报。
+- `templates/card-output.template.md`: 最终卡片产物的输出契约。
+- `examples/same-source-three-styles.md`: 同一虚构来源生成三种风格的示例。
+- `evals/doc-to-card-quality-checklist.md`: 来源保真、风格匹配、反 AI 味等质量检查。
+
 ## 什么时候使用 / When To Use
 
 当用户提供一段来源材料，并希望把它转成卡片式、可发布、可复核的教育内容时，使用这个 Skill。
 
 适合：
 
-- 把 AI 工具文档、产品更新、教程或技术文章转成小红书卡片、公众号段落、LinkedIn carousel 或内部知识卡。
-- 把一段复杂说明拆成“问题、概念、步骤、例子、注意事项、行动建议”。
-- 把可重复工作流写成面向读者的卡片内容，同时保留证据和假设。
+- 把 AI 工具文档、产品更新、教程或技术文章转成小红书卡片、公众号段落、LinkedIn carousel、内部知识卡或分享材料。
+- 同一份来源材料需要生成不同 style profiles / 风格配置，例如轻知识卡、技术深读卡、内部培训卡。
+- 把复杂说明拆成“问题、概念、步骤、例子、注意事项、行动建议”。
 - 需要中文表达，但仍要保留英文工具名、API 名、模型名或命令名的准确性。
 
 不适合：没有来源材料的情绪化内容、纯营销标题、泛泛的爆款模板、只需要润色一句文案的任务。
@@ -26,50 +41,65 @@ description: Convert source documents, articles, tutorials, notes, or tool docum
 
 - 来源材料：粘贴文本、文件路径、用户摘录、笔记或明确摘要。
 - 目标读者：中文 AI 创作者、技术内容作者、AI 工具学习者、开发者、团队成员等。
-- 发布渠道：小红书、公众号、LinkedIn、内部 wiki、幻灯片、知识库等。
+- 发布渠道：小红书、公众号、LinkedIn carousel、内部 wiki、幻灯片等。
 - 内容目标：教学、总结、对比、发布、入门、复盘、转化。
-- 输出约束：卡片数量、语言、语气、引用要求、不能声称的内容、是否需要视觉建议。
-- 验证要求：是否需要 source-backed claims / 来源支撑声明、assumptions / 假设列表。
+- 风格要求：card count / 卡片数量、density / 信息密度、tone / 语气、visual direction / 视觉方向、title strategy / 标题策略、CTA style / 行动引导。
+- 证据要求：是否需要 source-backed claims / 来源支撑声明、assumptions / 假设列表、claims needing verification / 待验证声明。
+- 禁用表达：用户不想要的标题套路、视觉风格、语气、过度营销或“AI 味”表达。
 
-如果来源材料不足，先说明缺口；不要凭经验补产品功能、数据、价格或发布日期。
+如果用户没有给风格参数，先根据渠道和目标读者选择一个 style preset，并在输出中标明假设。可读取 `references/style-system.md`。
 
-## 工作流程 / Workflow
+## 两层工作流 / Two-Layer Workflow
 
-1. 建立来源契约。
-   - 标明来源类型、标题或产品名、日期信息和可信度。
-   - 区分 source facts / 来源事实、editorial interpretation / 编辑解释和 assumptions / 假设。
-   - 对当前产品能力、价格、模型、政策等易变信息标记“需要验证”。
+### 1. 来源理解层 / Source Understanding Layer
 
-2. 提取内容主干。
-   - 找到核心问题、关键概念、步骤、例子、限制和读者下一步。
-   - 删除重复铺垫、营销空话和无法从来源推出的结论。
-   - 保留必要技术词，给中文解释时避免改变原意。
+这一层只处理来源材料，不考虑“写得像哪个平台”。产物是 content brief / 内容简报。
 
-3. 选择卡片结构。
-   - 工具文档：是什么 -> 什么时候用 -> 如何开始 -> 工作流 -> 常见错误 -> 练习任务。
-   - 教程文章：问题 -> 心智模型 -> 步骤 -> 示例 -> 检查清单 -> 下一步。
-   - 观点文章：主张 -> 证据 -> 影响 -> 反例或限制 -> 行动建议。
-   - Skill 工作流：触发场景 -> 输入 -> workflow -> output contract / 输出契约 -> quality check / 质量检查 -> failure boundary / 失败边界。
+必须提取：
 
-4. 起草卡片。
-   - 每张卡只承担一个任务。
-   - 卡片标题直接表达读者将获得什么。
-   - 正文使用具体名词和动词，避免“提升效率”“赋能创作”这类空泛表达。
-   - 对中文平台优先写中文正文；英文技术词保留原文。
+- source facts / 来源事实：来源明确支持的事实。
+- source logic / 来源逻辑：材料的论证、步骤或因果链。
+- key concepts / 关键概念：读者必须理解的术语、机制或流程。
+- assumptions / 假设：为了面向目标读者表达而补充的前提。
+- claims needing verification / 需要验证的声明：产品能力、价格、模型、发布时间、政策等易变信息。
+- boundaries / 边界：来源没有覆盖、不能推断或不能宣称的内容。
 
-5. 添加证据和生产说明。
-   - 为关键 claim 标注来源依据或“编辑假设”。
-   - 视觉建议只作为制作提示，不伪装成已有素材。
-   - 添加 caption / 配文和明确 call to action / 行动请求。
+执行要求：
 
-6. 做发布前检查。
-   - 检查读者是否能从卡片还原来源逻辑。
-   - 删除无法从来源支持的推断。
-   - 检查卡片顺序是否像一个教学路径，而不是零散 tips。
+1. 建立来源契约，标明来源类型、标题或产品名、日期信息和可信度。
+2. 区分 source facts、editorial interpretation / 编辑解释和 assumptions。
+3. 提取可复用内容主干：问题、概念、步骤、例子、限制和读者下一步。
+4. 删除重复铺垫、营销空话和无法从来源推出的结论。
+5. 对当前产品能力、价格、模型、政策等易变信息标记“需要验证”。
+
+### 2. 风格表达层 / Style Rendering Layer
+
+这一层在不改变来源事实和证据边界的前提下，把 content brief 渲染成具体卡片产品。
+
+必须确定：
+
+- platform / 平台：小红书、公众号、LinkedIn carousel、内部 wiki、幻灯片等。
+- target audience / 目标读者：新手、进阶创作者、开发者、团队成员、Skill 作者等。
+- content density / 信息密度：轻、中、高。
+- tone / 语气：轻解释、理性、技术深读、培训、极简等。
+- card rhythm / 卡片节奏：每张卡的信息量和递进方式。
+- title strategy / 标题策略：问题型、结论型、对比型、步骤型、风险提醒型。
+- visual direction / 视觉方向：信息卡、流程图、对比表、极简海报、培训页等。
+- CTA style / 行动引导：收藏、练习、评论反馈、团队执行、下一步阅读。
+- forbidden patterns / 禁用模式：夸张承诺、伪案例、无来源数字、泛 prompt-library 话术。
+
+执行要求：
+
+1. 读取或生成 style profile。需要细节时使用 `templates/style-profile.template.md`。
+2. 按内容类型选择 card architecture。需要模式时读取 `references/card-architectures.md`。
+3. 按渠道调整平台表达。需要平台细节时读取 `references/platform-profiles.md`。
+4. 起草卡片：每张卡只承担一个任务，标题和正文服务同一个信息动作。
+5. 添加 visual direction、evidence note、caption 和 CTA。
+6. 用 `evals/doc-to-card-quality-checklist.md` 做质量检查。
 
 ## 输出格式 / Output Format
 
-按下面结构输出 Markdown：
+默认按下面结构输出 Markdown。需要更完整模板时读取 `templates/content-brief.template.md` 和 `templates/card-output.template.md`。
 
 ```markdown
 ## 内容简报 / Content Brief
@@ -78,8 +108,43 @@ description: Convert source documents, articles, tutorials, notes, or tool docum
 - 目标读者:
 - 发布渠道:
 - 内容目标:
-- 角度:
+- 选用风格:
+- 选用卡片架构:
 - 需要验证的信息:
+
+## 来源理解层 / Source Understanding Layer
+
+### Source Facts / 来源事实
+
+- <来源明确支持的事实>
+
+### Source Logic / 来源逻辑
+
+- <步骤、因果链或论证结构>
+
+### Key Concepts / 关键概念
+
+- <术语或概念>:
+
+### Assumptions / 假设
+
+- <假设> -> <为什么需要>
+
+### Boundaries / 边界
+
+- <不能宣称或不能推断的内容>
+
+## 风格表达层 / Style Rendering Layer
+
+- Platform / 平台:
+- Audience / 读者:
+- Density / 信息密度:
+- Tone / 语气:
+- Card rhythm / 卡片节奏:
+- Title strategy / 标题策略:
+- Visual direction / 视觉方向:
+- CTA style / 行动引导:
+- Forbidden patterns / 禁用模式:
 
 ## 卡片草稿 / Card Draft
 
@@ -102,9 +167,9 @@ description: Convert source documents, articles, tutorials, notes, or tool docum
 
 - <声明> -> <来源依据>
 
-## 编辑假设 / Editorial Assumptions
+## 待验证声明 / Claims Needing Verification
 
-- <假设> -> <为什么需要这个假设>
+- <声明> -> <需要验证的原因>
 
 ## 质量检查 / Quality Check
 
@@ -113,12 +178,13 @@ description: Convert source documents, articles, tutorials, notes, or tool docum
 
 ## 质量检查 / Quality Checks
 
-- 每张卡只有一个明确功能。
-- 卡片顺序形成可理解的教学路径或决策路径。
-- 来源事实、编辑解释和假设被清楚分开。
-- 没有编造工具能力、价格、模型、时间、数据或用户反馈。
-- 中文表达适合目标渠道，但没有牺牲技术准确性。
-- 输出是可继续设计、编辑或发布的内容草稿，而不是单段摘要。
+- 来源事实、来源逻辑、编辑解释和假设被清楚分开。
+- 风格改变只影响表达、节奏、标题、视觉方向和 CTA，不改变来源事实。
+- 每张卡只有一个明确功能，且卡片顺序形成可理解路径。
+- 技术词、工具能力、价格、模型、时间、数据和用户反馈没有被编造。
+- 平台适配具体，不只是把同一段话换行。
+- 输出避免“万能提示词”“一键提效”“私藏神器”等 generic prompt-library phrasing。
+- 视觉建议可供设计或排版使用，但不伪装成已有素材。
 
 ## 不适用场景 / Failure Boundaries
 
@@ -127,42 +193,47 @@ description: Convert source documents, articles, tutorials, notes, or tool docum
 - 不处理需要专业审核的医疗、法律、金融或安全关键建议，除非明确标记为需专家复核。
 - 如果用户要求夸大效果、伪造案例或隐藏不确定性，要拒绝这部分要求并给出可替代的真实表达。
 - 如果来源太薄，只输出“材料不足报告”和需要补充的输入。
+- 如果风格要求与来源事实冲突，优先保护来源事实和证据边界。
 
 ## 示例输入 / Example Input
 
 ```text
-把下面这段 AI 编程工具更新说明转成 6 张小红书卡片，面向中文 AI 工具学习者。要求中文输出，保留英文功能名，不要编造文档里没有的能力，并列出需要验证的假设。
+把下面这段 AI 编程工具更新说明转成 3 种风格：小红书轻知识卡、技术深读卡、内部培训知识卡。要求中文输出，保留英文功能名，不要编造文档里没有的能力，并说明不同风格改变了什么、哪些来源事实保持不变。
 
 [用户粘贴来源摘录]
 ```
 
 ## 示例输出结构 / Example Output Structure
 
+参考 `examples/same-source-three-styles.md`。最小结构应包含：
+
 ```markdown
 ## 内容简报 / Content Brief
 
-- 来源: 用户提供的 AI 编程工具更新说明
-- 目标读者: 中文 AI 工具学习者
-- 发布渠道: 小红书
-- 内容目标: 帮读者理解这个更新适合什么场景
-- 角度: 从“什么时候该用”切入，而不是罗列功能
+- 来源:
+- 不变事实:
+- 风格版本:
 
-## 卡片草稿 / Card Draft
+## Style A: 小红书轻知识卡
 
-### Card 1: 这个更新解决的不是“写代码”，而是“少走错流程”
+- Style profile:
+- Cards 1-3:
 
-- 这张卡的任务: 建立问题场景
-- 卡片正文: ...
-- 视觉建议: ...
-- 证据说明: 来自来源第 1 段对 workflow 的描述
+## Style B: 技术深读卡
 
-...
+- Style profile:
+- Cards 1-3:
 
-## 来源支撑声明 / Source-Backed Claims
+## Style C: 内部培训知识卡
 
-- 该功能支持某个 workflow -> 来源第 2 段
+- Style profile:
+- Cards 1-3:
 
-## 编辑假设 / Editorial Assumptions
+## What Changed Across Styles / 风格变化
 
-- 读者已了解基础命令行操作 -> 来源未说明，因目标读者设定而假设
+- <表达、节奏、视觉和 CTA 的变化>
+
+## What Stayed Invariant / 不变内容
+
+- <来源事实和证据边界>
 ```
