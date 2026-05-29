@@ -14,7 +14,7 @@
         <h1 class="overview-title">Claude Code 红技能图文卡片预览</h1>
       </div>
       <p class="overview-note">
-        Overview page 展示三张卡的整体一致性。最终 RedSkill / 小红书截图请打开单卡页面：每张都是固定 1080×1350 的 4:5 画布。
+        Overview page 展示三张卡的整体一致性，最终截图请使用单卡页面。Card 1 is the current master template candidate; Cards 2-3 will be aligned after Card 1 is approved.
       </p>
     </header>
 
@@ -26,38 +26,39 @@
 
     <section class="overview-grid" aria-label="Claude Code demo card previews">
       <div class="preview-frame">
-        <article class="xhs-card" aria-label="Claude Code RedSkill Demo Card 01">
-          <div class="card-content">
+        <article class="xhs-card card master-card" aria-label="Claude Code RedSkill Demo Card 01">
+          <div class="card-content master-content">
             <div class="card-top">
               <span class="badge">RedSkill Demo</span>
               <span class="card-number">01</span>
             </div>
-            <div class="title-zone">
-              <h2 class="card-title">Claude Code 解决的不是<span class="no-break">“聊天”</span>，是进开发流程</h2>
-            </div>
-            <p class="body-copy">Claude Code 是一个 agentic coding tool / 代理式编程工具。更准确的理解方式不是“更会聊天的 AI”，而是能进入 developer workflows。</p>
+            <section class="headline-zone">
+              <h2 class="title">Claude Code 解决的不是<span class="no-break">“聊天”</span></h2>
+              <p class="subtitle">而是让 AI 进入 <strong>developer workflow</strong></p>
+            </section>
+            <p class="body">Claude Code 是一个 agentic coding tool。它的重点不是闲聊，而是帮助开发者在真实代码流程里完成任务。</p>
             <div class="chips">
               <span class="chip">agentic coding tool</span>
               <span class="chip">developer workflow</span>
             </div>
-            <div class="visual-zone">
-              <div class="compare-grid">
-                <section class="compare-panel">
-                  <p class="panel-label">General chat</p>
-                  <p class="panel-main">只回答问题</p>
-                  <div class="fake-lines"><span class="fake-line"></span><span class="fake-line short"></span><span class="fake-line"></span></div>
+            <div class="visual-zone master-visual-zone">
+              <div class="master-contrast">
+                <section class="mini-panel chat-panel">
+                  <p class="mini-label">General Chat</p>
+                  <p class="mini-main">只回答问题</p>
+                  <div class="chat-bubble"><span class="bubble-line"></span><span class="bubble-line short"></span></div>
+                  <span class="character fox master-fox"><span class="eye left"></span><span class="eye right"></span><span class="face"></span></span>
                 </section>
-                <section class="compare-panel">
-                  <p class="panel-label">Developer workflow</p>
-                  <p class="panel-main">进入开发流程</p>
-                  <div class="fake-lines"><span class="fake-line blue"></span><span class="fake-line"></span><span class="fake-line short blue"></span></div>
+                <div class="transition-note"><span class="transition-arrow"></span><span>不是终点</span></div>
+                <section class="mini-panel workflow-panel">
+                  <p class="mini-label">Developer Workflow</p>
+                  <p class="mini-main">进入开发流程</p>
+                  <div class="workflow-map"><span class="workflow-node">理解代码库</span><span class="workflow-node">执行例行任务</span><span class="workflow-node">处理 git 流程</span></div>
+                  <span class="character robot master-robot"><span class="eye left"></span><span class="eye right"></span></span>
                 </section>
               </div>
-              <span class="center-arrow"></span>
-              <span class="motif robot motif-card1-robot"><span class="eye left"></span><span class="eye right"></span></span>
-              <span class="motif fox motif-card1-fox"><span class="eye left"></span><span class="eye right"></span><span class="face"></span></span>
             </div>
-            <p class="evidence-note">证据边界：agentic coding tool 与 developer workflows rather than general chat 来自 source snapshot；“更准确的理解方式”是编辑解释。</p>
+            <p class="evidence-strip">证据边界：基于 source snapshot 中 “agentic coding tool” 与 “developer workflows” 的描述；不扩展为“替代程序员”或“完整自动化开发”。</p>
             <footer class="footer-mark"><span>SkillCraft / doc-to-card</span><span class="footer-line"></span></footer>
           </div>
         </article>

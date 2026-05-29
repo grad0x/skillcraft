@@ -11,7 +11,7 @@
 - `cards-brief.md`: 从 A/B test Group C Cards 1-3 抽出的 production brief / 生产简报。
 - `card-renderer.css`: overview 和单卡页面共用的静态 card renderer / 卡片渲染样式。
 - `cards-preview.html`: overview page / 总览页，横向展示三张卡的一致性。
-- `card-01.html`: 单卡截图页，1080px × 1350px。
+- `card-01.html`: 单卡 master template candidate / 主模板候选页，1080px × 1350px。
 - `card-02.html`: 单卡截图页，1080px × 1350px。
 - `card-03.html`: 单卡截图页，1080px × 1350px。
 
@@ -38,10 +38,15 @@
 .agents/skills/doc-to-card/examples/claude-code-redskill-demo/cards-preview.html
 ```
 
-打开单卡页面：
+打开单卡 master template / 主模板页：
 
 ```text
 .agents/skills/doc-to-card/examples/claude-code-redskill-demo/card-01.html
+```
+
+打开其他单卡页面：
+
+```text
 .agents/skills/doc-to-card/examples/claude-code-redskill-demo/card-02.html
 .agents/skills/doc-to-card/examples/claude-code-redskill-demo/card-03.html
 ```
