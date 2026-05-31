@@ -9,6 +9,8 @@
 - `source-snapshot.md`: 本 demo 使用的受控 Claude Code 来源快照和证据边界。
 - `style-profile.md`: Group C 使用的完整 style profile / 风格配置。
 - `cards-brief.md`: 从 A/B test Group C Cards 1-3 抽出的 production brief / 生产简报。
+- `design-reference-notes.md`: reference-driven template lab / 模板实验参考笔记。
+- `template-lab.html`: 同一 Card 1 内容的三种模板候选，用于比较视觉方向。
 - `card-renderer.css`: overview 和单卡页面共用的静态 card renderer / 卡片渲染样式。
 - `cards-preview.html`: overview page / 总览页，横向展示三张卡的一致性。
 - `card-01.html`: 单卡 master template candidate / 主模板候选页，1080px × 1350px。
@@ -36,6 +38,12 @@
 
 ```text
 .agents/skills/doc-to-card/examples/claude-code-redskill-demo/cards-preview.html
+```
+
+打开 template lab / 模板实验页：
+
+```text
+.agents/skills/doc-to-card/examples/claude-code-redskill-demo/template-lab.html
 ```
 
 打开单卡 master template / 主模板页：

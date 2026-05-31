@@ -1,0 +1,982 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Template Lab - Claude Code RedSkill Demo</title>
+  <style>
+    :root {
+      --bg: #f3f6fa;
+      --card-bg: #ffffff;
+      --ink: #122033;
+      --muted: #5f6f83;
+      --blue: #235fd6;
+      --cyan: #20b9d5;
+      --border: rgba(43, 88, 145, 0.18);
+      --chip-bg: #edf6ff;
+      --soft-panel: #f4f8fc;
+      --accent: #f07f45;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      min-height: 100%;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", "Source Han Sans SC", Arial, sans-serif;
+    }
+
+    .lab {
+      width: min(1200px, calc(100% - 48px));
+      margin: 0 auto;
+      padding: 44px 0 72px;
+    }
+
+    .lab-header {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 32px;
+      margin-bottom: 36px;
+    }
+
+    .lab-kicker {
+      margin: 0 0 10px;
+      color: var(--blue);
+      font-size: 14px;
+      font-weight: 850;
+      letter-spacing: 0;
+      text-transform: uppercase;
+    }
+
+    .lab-title {
+      margin: 0;
+      font-size: 36px;
+      line-height: 1.18;
+      font-weight: 950;
+      letter-spacing: 0;
+    }
+
+    .lab-note {
+      max-width: 470px;
+      margin: 0;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.72;
+    }
+
+    .template-stack {
+      display: grid;
+      gap: 42px;
+      justify-items: center;
+    }
+
+    .template-card {
+      width: 1080px;
+      height: 1350px;
+      overflow: hidden;
+      position: relative;
+      border: 1px solid var(--border);
+      border-radius: 42px;
+      background: var(--card-bg);
+      color: var(--ink);
+      box-shadow: 0 26px 70px rgba(43, 71, 105, 0.16);
+    }
+
+    .template-card::before {
+      content: "";
+      position: absolute;
+      inset: 30px;
+      border: 1px solid var(--border);
+      border-radius: 30px;
+      pointer-events: none;
+    }
+
+    .card-inner {
+      position: relative;
+      z-index: 1;
+      height: 100%;
+      padding: 64px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 54px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      height: 40px;
+      padding: 0 18px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: var(--chip-bg);
+      color: var(--blue);
+      font-size: 20px;
+      font-weight: 850;
+    }
+
+    .card-number {
+      color: color-mix(in srgb, var(--ink) 30%, transparent);
+      font-size: 48px;
+      line-height: 1;
+      font-weight: 950;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .title-zone {
+      min-height: 230px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 18px;
+    }
+
+    .title {
+      margin: 0;
+      max-width: 930px;
+      color: var(--ink);
+      font-size: 78px;
+      line-height: 1.1;
+      font-weight: 950;
+      letter-spacing: 0;
+    }
+
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 34px;
+      line-height: 1.34;
+      font-weight: 760;
+      letter-spacing: 0;
+    }
+
+    .subtitle strong {
+      color: var(--blue);
+      font-weight: 900;
+    }
+
+    .body {
+      margin: 0;
+      min-height: 118px;
+      color: color-mix(in srgb, var(--ink) 84%, white);
+      font-size: 30px;
+      line-height: 1.48;
+      font-weight: 540;
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      min-height: 46px;
+      align-content: start;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      min-height: 42px;
+      padding: 0 17px;
+      border: 1px solid var(--border);
+      border-radius: 15px;
+      background: var(--chip-bg);
+      color: var(--blue);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 21px;
+      font-weight: 850;
+    }
+
+    .visual-zone {
+      position: relative;
+      flex: 1;
+      min-height: 0;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: 32px;
+      background: var(--soft-panel);
+    }
+
+    .evidence-strip {
+      margin: 0;
+      min-height: 118px;
+      display: flex;
+      align-items: center;
+      padding: 19px 22px;
+      border-left: 7px solid var(--cyan);
+      border-radius: 20px;
+      background: color-mix(in srgb, var(--soft-panel) 78%, white);
+      color: var(--muted);
+      font-size: 21px;
+      line-height: 1.48;
+      font-weight: 560;
+    }
+
+    .footer-mark {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 28px;
+      color: color-mix(in srgb, var(--muted) 78%, white);
+      font-size: 18px;
+      font-weight: 820;
+    }
+
+    .footer-line {
+      width: 136px;
+      height: 2px;
+      border-radius: 999px;
+      background: var(--border);
+    }
+
+    .template-editorial {
+      --card-bg: #fbfcfe;
+      --ink: #111827;
+      --muted: #59667a;
+      --blue: #1f5fd0;
+      --cyan: #24b7c7;
+      --border: rgba(25, 47, 80, 0.16);
+      --chip-bg: #eef4fb;
+      --soft-panel: #f7f9fc;
+      --accent: #e86f42;
+    }
+
+    .template-editorial .card-inner {
+      padding-top: 58px;
+    }
+
+    .template-editorial .title {
+      max-width: 960px;
+      font-size: 82px;
+    }
+
+    .editorial-grid {
+      height: 100%;
+      display: grid;
+      grid-template-columns: 1fr 1.22fr;
+      gap: 22px;
+      padding: 28px;
+    }
+
+    .editorial-panel {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 28px;
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      background: #ffffff;
+    }
+
+    .editorial-panel.workflow {
+      background: linear-gradient(180deg, #ffffff 0%, #f0f7ff 100%);
+      border-color: color-mix(in srgb, var(--blue) 30%, white);
+    }
+
+    .mini-label {
+      margin: 0 0 12px;
+      color: var(--muted);
+      font-size: 18px;
+      font-weight: 900;
+      letter-spacing: 0;
+      text-transform: uppercase;
+    }
+
+    .mini-main {
+      margin: 0;
+      color: var(--ink);
+      font-size: 40px;
+      line-height: 1.18;
+      font-weight: 940;
+      letter-spacing: 0;
+    }
+
+    .editorial-list {
+      display: grid;
+      gap: 14px;
+      margin: 24px 0 0;
+      padding: 0;
+      list-style: none;
+      color: var(--muted);
+      font-size: 24px;
+      line-height: 1.36;
+      font-weight: 680;
+    }
+
+    .editorial-list li {
+      display: grid;
+      grid-template-columns: 18px 1fr;
+      gap: 10px;
+      align-items: start;
+    }
+
+    .editorial-list li::before {
+      content: "";
+      width: 10px;
+      height: 10px;
+      margin-top: 11px;
+      border-radius: 999px;
+      background: var(--accent);
+    }
+
+    .workflow .editorial-list li::before {
+      background: var(--cyan);
+    }
+
+    .editorial-measure {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 24px;
+    }
+
+    .measure-cell {
+      min-height: 74px;
+      padding: 12px;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: var(--soft-panel);
+      color: var(--blue);
+      font-size: 19px;
+      line-height: 1.22;
+      font-weight: 850;
+    }
+
+    .editorial-arrow {
+      position: absolute;
+      left: calc(45% - 34px);
+      top: 50%;
+      width: 68px;
+      height: 68px;
+      display: grid;
+      place-items: center;
+      border: 1px solid color-mix(in srgb, var(--blue) 24%, white);
+      border-radius: 999px;
+      background: var(--card-bg);
+      color: var(--blue);
+      font-size: 36px;
+      font-weight: 900;
+      transform: translateY(-50%);
+      box-shadow: 0 16px 38px rgba(41, 82, 132, 0.14);
+    }
+
+    .template-soft {
+      --card-bg: #fffdf8;
+      --ink: #283246;
+      --muted: #6f7482;
+      --blue: #2773d8;
+      --cyan: #26b8b0;
+      --border: rgba(111, 129, 156, 0.18);
+      --chip-bg: #fff3df;
+      --soft-panel: #f5fbf8;
+      --accent: #f08d62;
+      background:
+        linear-gradient(155deg, #fffdf8 0%, #f7fbff 47%, #fff7ef 100%);
+    }
+
+    .template-soft .badge {
+      background: #ffffff;
+      color: #c35f37;
+    }
+
+    .template-soft .title {
+      max-width: 900px;
+      font-size: 74px;
+    }
+
+    .soft-stage {
+      height: 100%;
+      padding: 28px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 132px;
+      gap: 18px;
+    }
+
+    .soft-cardlet {
+      position: relative;
+      padding: 28px;
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      background: rgba(255, 255, 255, 0.78);
+    }
+
+    .soft-cardlet.agent {
+      background: linear-gradient(180deg, #ffffff 0%, #edf8ff 100%);
+    }
+
+    .soft-title {
+      margin: 0 0 14px;
+      color: var(--ink);
+      font-size: 31px;
+      line-height: 1.18;
+      font-weight: 920;
+      letter-spacing: 0;
+    }
+
+    .soft-copy {
+      margin: 0;
+      color: var(--muted);
+      font-size: 24px;
+      line-height: 1.42;
+      font-weight: 650;
+    }
+
+    .soft-path {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: 18px;
+      padding: 18px 24px;
+      border: 1px solid color-mix(in srgb, var(--cyan) 28%, white);
+      border-radius: 26px;
+      background: rgba(255, 255, 255, 0.72);
+    }
+
+    .soft-path span {
+      color: var(--muted);
+      font-size: 24px;
+      font-weight: 820;
+    }
+
+    .soft-path strong {
+      color: var(--blue);
+      font-size: 29px;
+      letter-spacing: 0;
+    }
+
+    .soft-arrow {
+      width: 100px;
+      height: 3px;
+      border-radius: 999px;
+      background: var(--cyan);
+      position: relative;
+    }
+
+    .soft-arrow::after {
+      content: "";
+      position: absolute;
+      right: -1px;
+      top: -7px;
+      width: 16px;
+      height: 16px;
+      border-top: 3px solid var(--cyan);
+      border-right: 3px solid var(--cyan);
+      transform: rotate(45deg);
+    }
+
+    .character {
+      position: absolute;
+      display: block;
+    }
+
+    .robot {
+      right: 30px;
+      bottom: 28px;
+      width: 86px;
+      height: 78px;
+      border: 4px solid #2d6fd2;
+      border-radius: 24px;
+      background: #eff8ff;
+    }
+
+    .robot::before {
+      content: "";
+      position: absolute;
+      left: 34px;
+      top: -19px;
+      width: 14px;
+      height: 17px;
+      border-radius: 8px 8px 0 0;
+      background: #2d6fd2;
+    }
+
+    .robot .eye,
+    .fox .eye {
+      position: absolute;
+      top: 30px;
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: #16324f;
+    }
+
+    .robot .eye.left {
+      left: 25px;
+    }
+
+    .robot .eye.right {
+      right: 25px;
+    }
+
+    .fox {
+      left: 30px;
+      bottom: 26px;
+      width: 82px;
+      height: 72px;
+      border-radius: 28px 28px 34px 34px;
+      background: #f2a067;
+    }
+
+    .fox::before,
+    .fox::after {
+      content: "";
+      position: absolute;
+      top: -19px;
+      width: 28px;
+      height: 32px;
+      background: #f2a067;
+      clip-path: polygon(50% 0, 100% 100%, 0 100%);
+    }
+
+    .fox::before {
+      left: 7px;
+      transform: rotate(-9deg);
+    }
+
+    .fox::after {
+      right: 7px;
+      transform: rotate(9deg);
+    }
+
+    .fox .eye.left {
+      left: 24px;
+    }
+
+    .fox .eye.right {
+      right: 24px;
+    }
+
+    .fox .face {
+      position: absolute;
+      left: 24px;
+      bottom: 10px;
+      width: 34px;
+      height: 18px;
+      border-radius: 50% 50% 40% 40%;
+      background: #fff3df;
+    }
+
+    .template-workflow {
+      --card-bg: #fbfcff;
+      --ink: #172035;
+      --muted: #657083;
+      --blue: #2668d8;
+      --cyan: #18b7c8;
+      --border: rgba(25, 44, 78, 0.16);
+      --chip-bg: #edf5ff;
+      --soft-panel: #f7fafc;
+      --accent: #79b84a;
+    }
+
+    .template-workflow .title-zone {
+      min-height: 210px;
+    }
+
+    .template-workflow .title {
+      font-size: 76px;
+    }
+
+    .workflow-map-lab {
+      height: 100%;
+      padding: 30px;
+      display: grid;
+      grid-template-columns: 1fr 70px 1.1fr 70px 1.18fr;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .workflow-node {
+      min-height: 260px;
+      padding: 28px;
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      background: #ffffff;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .workflow-node.entry {
+      background: #fffaf4;
+      border-color: color-mix(in srgb, var(--accent) 38%, white);
+    }
+
+    .workflow-node.output {
+      background: #eef8ff;
+      border-color: color-mix(in srgb, var(--blue) 32%, white);
+    }
+
+    .node-step {
+      width: 52px;
+      height: 52px;
+      display: grid;
+      place-items: center;
+      border-radius: 16px;
+      background: var(--chip-bg);
+      color: var(--blue);
+      font-size: 24px;
+      font-weight: 940;
+    }
+
+    .node-title {
+      margin: 24px 0 8px;
+      color: var(--ink);
+      font-size: 33px;
+      line-height: 1.18;
+      font-weight: 930;
+      letter-spacing: 0;
+    }
+
+    .node-copy {
+      margin: 0;
+      color: var(--muted);
+      font-size: 23px;
+      line-height: 1.38;
+      font-weight: 650;
+    }
+
+    .workflow-connector {
+      position: relative;
+      height: 4px;
+      border-radius: 999px;
+      background: var(--cyan);
+    }
+
+    .workflow-connector::after {
+      content: "";
+      position: absolute;
+      right: -2px;
+      top: -8px;
+      width: 18px;
+      height: 18px;
+      border-top: 4px solid var(--cyan);
+      border-right: 4px solid var(--cyan);
+      transform: rotate(45deg);
+    }
+
+    .workflow-mini-tags {
+      display: grid;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .workflow-mini-tags span {
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: var(--soft-panel);
+      color: var(--blue);
+      font-size: 19px;
+      font-weight: 820;
+    }
+
+    .tiny-agent {
+      position: absolute;
+      right: 34px;
+      bottom: 26px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 17px;
+      font-weight: 820;
+    }
+
+    .tiny-agent::before {
+      content: "";
+      width: 28px;
+      height: 24px;
+      border: 3px solid var(--blue);
+      border-radius: 8px;
+      background: #ffffff;
+    }
+
+    .recommendation {
+      width: 100%;
+      margin-top: 8px;
+      padding: 30px;
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      background: #ffffff;
+    }
+
+    .recommendation h2 {
+      margin: 0 0 18px;
+      font-size: 28px;
+      line-height: 1.2;
+      letter-spacing: 0;
+    }
+
+    .recommendation-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .recommendation-card {
+      padding: 18px;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      background: var(--soft-panel);
+    }
+
+    .recommendation-card h3 {
+      margin: 0 0 10px;
+      font-size: 20px;
+      line-height: 1.24;
+      letter-spacing: 0;
+    }
+
+    .recommendation-card p {
+      margin: 0 0 8px;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.55;
+    }
+
+    .next-step {
+      margin: 18px 0 0;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+      color: var(--ink);
+      font-size: 17px;
+      line-height: 1.6;
+      font-weight: 780;
+    }
+  </style>
+</head>
+<body>
+  <main class="lab">
+    <header class="lab-header">
+      <div>
+        <p class="lab-kicker">SkillCraft / doc-to-card template lab</p>
+        <h1 class="lab-title">Claude Code RedSkill Card 1 模板方向</h1>
+      </div>
+      <p class="lab-note">
+        同一份 Card 1 来源内容，放进三种 1080px × 1350px 模板候选。目标是比较结构差异，而不是把三套都打磨成最终稿。
+      </p>
+    </header>
+
+    <section class="template-stack" aria-label="Three template candidates">
+      <article class="template-card template-editorial" aria-label="Template A Editorial Tech">
+        <div class="card-inner">
+          <div class="card-top">
+            <span class="badge">A / 技术杂志风</span>
+            <span class="card-number">01</span>
+          </div>
+          <section class="title-zone">
+            <h2 class="title">Claude Code 解决的不是“聊天”</h2>
+            <p class="subtitle">而是让 AI 进入 <strong>developer workflow</strong></p>
+          </section>
+          <p class="body">
+            Claude Code 是一个 agentic coding tool。它的重点不是闲聊，而是帮助开发者在真实代码流程里完成任务。
+          </p>
+          <div class="chips" aria-label="English technical labels">
+            <span class="chip">agentic coding tool</span>
+            <span class="chip">developer workflow</span>
+          </div>
+          <div class="visual-zone" aria-label="structured comparison blocks">
+            <div class="editorial-grid">
+              <section class="editorial-panel">
+                <div>
+                  <p class="mini-label">General Chat</p>
+                  <p class="mini-main">停留在问答</p>
+                  <ul class="editorial-list">
+                    <li>信息动作更像对话窗口</li>
+                    <li>上下文不等于代码流程</li>
+                    <li>不直接说明工作流位置</li>
+                  </ul>
+                </div>
+              </section>
+              <section class="editorial-panel workflow">
+                <div>
+                  <p class="mini-label">Developer Workflow</p>
+                  <p class="mini-main">进入真实开发流程</p>
+                  <ul class="editorial-list">
+                    <li>面向 codebase 和开发任务</li>
+                    <li>围绕 routine coding tasks 展开</li>
+                    <li>可以连接 git workflows 语境</li>
+                  </ul>
+                </div>
+                <div class="editorial-measure" aria-hidden="true">
+                  <span class="measure-cell">理解代码库</span>
+                  <span class="measure-cell">执行任务</span>
+                  <span class="measure-cell">处理流程</span>
+                </div>
+              </section>
+              <span class="editorial-arrow" aria-hidden="true">→</span>
+            </div>
+          </div>
+          <p class="evidence-strip">
+            证据边界：基于 source snapshot 中 “agentic coding tool” 与 “developer workflows” 的描述；不扩展为“替代程序员”或“完整自动化开发”。
+          </p>
+          <footer class="footer-mark">
+            <span>SkillCraft / doc-to-card</span>
+            <span class="footer-line"></span>
+          </footer>
+        </div>
+      </article>
+
+      <article class="template-card template-soft" aria-label="Template B Soft Knowledge">
+        <div class="card-inner">
+          <div class="card-top">
+            <span class="badge">B / 小红书轻知识风</span>
+            <span class="card-number">01</span>
+          </div>
+          <section class="title-zone">
+            <h2 class="title">Claude Code 解决的不是“聊天”</h2>
+            <p class="subtitle">而是让 AI 进入 <strong>developer workflow</strong></p>
+          </section>
+          <p class="body">
+            Claude Code 是一个 agentic coding tool。它的重点不是闲聊，而是帮助开发者在真实代码流程里完成任务。
+          </p>
+          <div class="chips" aria-label="English technical labels">
+            <span class="chip">agentic coding tool</span>
+            <span class="chip">developer workflow</span>
+          </div>
+          <div class="visual-zone" aria-label="friendly knowledge card visual zone">
+            <div class="soft-stage">
+              <section class="soft-cardlet">
+                <p class="soft-title">先别把它理解成聊天窗口</p>
+                <p class="soft-copy">这里的重点不是“回答得更会聊”，而是它被放在开发者的工作流程里。</p>
+                <span class="character fox" aria-hidden="true">
+                  <span class="eye left"></span>
+                  <span class="eye right"></span>
+                  <span class="face"></span>
+                </span>
+              </section>
+              <section class="soft-cardlet agent">
+                <p class="soft-title">更准确的入口是 Agent</p>
+                <p class="soft-copy">agentic coding tool 说明它面向 coding task，而不是泛泛聊天。</p>
+                <span class="character robot" aria-hidden="true">
+                  <span class="eye left"></span>
+                  <span class="eye right"></span>
+                </span>
+              </section>
+              <div class="soft-path" aria-label="from chat to developer workflow">
+                <span>General Chat</span>
+                <span class="soft-arrow" aria-hidden="true"></span>
+                <strong>Developer Workflow</strong>
+              </div>
+            </div>
+          </div>
+          <p class="evidence-strip">
+            证据边界：基于 source snapshot 中 “agentic coding tool” 与 “developer workflows” 的描述；不扩展为“替代程序员”或“完整自动化开发”。
+          </p>
+          <footer class="footer-mark">
+            <span>SkillCraft / doc-to-card</span>
+            <span class="footer-line"></span>
+          </footer>
+        </div>
+      </article>
+
+      <article class="template-card template-workflow" aria-label="Template C Workflow Diagram">
+        <div class="card-inner">
+          <div class="card-top">
+            <span class="badge">C / 工作流解释风</span>
+            <span class="card-number">01</span>
+          </div>
+          <section class="title-zone">
+            <h2 class="title">Claude Code 解决的不是“聊天”</h2>
+            <p class="subtitle">而是让 AI 进入 <strong>developer workflow</strong></p>
+          </section>
+          <p class="body">
+            Claude Code 是一个 agentic coding tool。它的重点不是闲聊，而是帮助开发者在真实代码流程里完成任务。
+          </p>
+          <div class="chips" aria-label="English technical labels">
+            <span class="chip">agentic coding tool</span>
+            <span class="chip">developer workflow</span>
+          </div>
+          <div class="visual-zone" aria-label="workflow diagram from general chat to developer workflow">
+            <div class="workflow-map-lab">
+              <section class="workflow-node entry">
+                <div>
+                  <span class="node-step">1</span>
+                  <h3 class="node-title">General Chat</h3>
+                  <p class="node-copy">更像通用问答，不代表进入代码流程。</p>
+                </div>
+              </section>
+              <span class="workflow-connector" aria-hidden="true"></span>
+              <section class="workflow-node">
+                <div>
+                  <span class="node-step">2</span>
+                  <h3 class="node-title">Agentic Coding Tool</h3>
+                  <p class="node-copy">把自然语言意图连接到开发任务语境。</p>
+                </div>
+              </section>
+              <span class="workflow-connector" aria-hidden="true"></span>
+              <section class="workflow-node output">
+                <div>
+                  <span class="node-step">3</span>
+                  <h3 class="node-title">Developer Workflow</h3>
+                  <p class="node-copy">面向真实代码库中的任务完成。</p>
+                </div>
+                <div class="workflow-mini-tags">
+                  <span>codebases</span>
+                  <span>routine tasks</span>
+                  <span>git workflows</span>
+                </div>
+              </section>
+            </div>
+            <span class="tiny-agent" aria-hidden="true">Agent guide</span>
+          </div>
+          <p class="evidence-strip">
+            证据边界：基于 source snapshot 中 “agentic coding tool” 与 “developer workflows” 的描述；不扩展为“替代程序员”或“完整自动化开发”。
+          </p>
+          <footer class="footer-mark">
+            <span>SkillCraft / doc-to-card</span>
+            <span class="footer-line"></span>
+          </footer>
+        </div>
+      </article>
+    </section>
+
+    <section class="recommendation" aria-label="Template recommendations">
+      <h2>Recommendation / 模板建议</h2>
+      <div class="recommendation-grid">
+        <section class="recommendation-card">
+          <h3>A. Editorial Tech / 技术杂志风</h3>
+          <p><strong>Best for:</strong> 技术深读、开发者向解释、需要专业感的首图。</p>
+          <p><strong>Strength:</strong> 标题和对比结构强，来源边界显得可信。</p>
+          <p><strong>Weakness:</strong> 收藏感稍弱，连续三张会偏冷。</p>
+          <p><strong>First demo:</strong> 可用，但需要给 Cards 2-3 增加更多节奏变化。</p>
+        </section>
+        <section class="recommendation-card">
+          <h3>B. Soft Knowledge / 小红书轻知识风</h3>
+          <p><strong>Best for:</strong> 小红书收藏卡、AI 工具学习者、轻解释入口。</p>
+          <p><strong>Strength:</strong> 亲和、易扫读，角色母题能建立系列记忆点。</p>
+          <p><strong>Weakness:</strong> 需要严格控制角色比例，避免显得幼稚。</p>
+          <p><strong>First demo:</strong> 推荐作为第一版 RedSkill demo 的主方向。</p>
+        </section>
+        <section class="recommendation-card">
+          <h3>C. Workflow Diagram / 工作流解释风</h3>
+          <p><strong>Best for:</strong> Agent workflow 概念解释、内部培训、流程型卡片。</p>
+          <p><strong>Strength:</strong> 逻辑路径最清楚，能直接解释 General Chat 到 Workflow 的差异。</p>
+          <p><strong>Weakness:</strong> 首图情绪弱，容易像培训 slide。</p>
+          <p><strong>First demo:</strong> 可作为 Card 2 或 Card 3 的结构参考，不建议做首图主方向。</p>
+        </section>
+      </div>
+      <p class="next-step">
+        Recommended next step: choose one template direction, refine it into the master card template, then apply it to Cards 2 and 3.
+      </p>
+    </section>
+  </main>
+</body>
+</html>
